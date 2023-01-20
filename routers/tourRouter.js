@@ -1,16 +1,20 @@
 const express = require('express');
-
-const router = express.Router();
 const isAuth = require('../middleware/authMiddleware');
 const tourController = require('../controllers/tourController');
+const reviewRouter =require('../routers/reviewRouter');
 
-router.route('/').get( tourController.getAllTours).post(tourController.createTour);
+const router = express.Router();
+
+router.use('/:tourId/reviews',reviewRouter)
+
+router.route('/')
+.get(isAuth.Protect, tourController.getAllTours)
+.post(isAuth.Protect, isAuth.Restricted('admin', 'lead-guide'), tourController.createTour);
 
 router
   .route('/:id')
-  .delete(tourController.deleteTour)
-  // .delete(isAuth.Protect, isAuth.Restricted('admin', 'lead-guide'), tourController.deleteTour)
-  .patch(tourController.updateTour)
-  .get(tourController.getTour);
+  .delete(isAuth.Protect, isAuth.Restricted('admin', 'lead-guide'), tourController.deleteTour)
+  .patch(isAuth.Protect,isAuth.Restricted('admin', 'lead-guide'),tourController.updateTour)
+  .get(isAuth.Protect,tourController.getTour);
 
 module.exports = router;
