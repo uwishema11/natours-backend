@@ -7,9 +7,21 @@ const authController = require('../controllers/authController');
 
 router.post('/signup', authController.signUp);
 router.post('/forgotPassword', authController.forgotPassword);
-router.patch('/resetPassword/:token', authController.resetPassword);
-router.patch('/updatePassword', isAuth.Protect, authController.updatePassword);
-router.patch('/updateMe', isAuth.Protect, userController.updateMe);
+router.patch('/resetPassword/:token', 
+authController.resetPassword
+);
+router.patch('/updatePassword', 
+isAuth.Protect, 
+authController.updatePassword
+);
+
+router.patch('/updateMe', 
+isAuth.Protect,
+userController.uplaodUserPhoto, 
+userController.resizeUserPhoto,
+userController.updateMe
+);
+
 router.post('/login', authController.login);
 router.get('/', userController.getAllUsers);
 

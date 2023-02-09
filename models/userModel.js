@@ -7,11 +7,11 @@ const bcrypt = require('bcrypt');
 const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
-    // required:true
+    required:true
   },
   lastName: {
     type: String,
-    // required:true
+    required:true
   },
   email: {
     type: String,
@@ -34,15 +34,14 @@ const userSchema = new mongoose.Schema({
   passwordChangedAt: Date,
   passwordConfirm: {
     type: String,
-    // required:true,
-    // validate:{
-    //     validator : function(el){
-    //         return el===this.password
-    //     }
-    // }
   },
-  photo: String,
+  photo: {
+    type: String,
+    default: 'default.jpg'
+  },
 });
+
+
 
 userSchema.methods.correctPassword = async function (candidatePassword, userPaswword) {
   return await bcrypt.compare(candidatePassword, userPaswword);

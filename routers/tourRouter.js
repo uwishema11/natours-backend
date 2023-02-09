@@ -8,13 +8,16 @@ const router = express.Router();
 router.use('/:tourId/reviews',reviewRouter)
 
 router.route('/')
-.get(isAuth.Protect, tourController.getAllTours)
+.get(tourController.getAllTours)
 .post(isAuth.Protect, isAuth.Restricted('admin', 'lead-guide'), tourController.createTour);
 
 router
   .route('/:id')
   .delete(isAuth.Protect, isAuth.Restricted('admin', 'lead-guide'), tourController.deleteTour)
-  .patch(isAuth.Protect,isAuth.Restricted('admin', 'lead-guide'),tourController.updateTour)
+  .patch(isAuth.Protect,
+    tourController.uploadTourPhoto,
+    tourController.resizeTourPhoto,
+    isAuth.Restricted('admin', 'lead-guide'),tourController.updateTour)
   .get(isAuth.Protect,tourController.getTour);
 
 module.exports = router;
