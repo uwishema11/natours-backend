@@ -4,13 +4,21 @@ const app = require('../app');
 
 
 
-
 describe('tour controller', () => {
-  describe('GET /api/v1/tours', () => {
-    it('should return a 200 status code', async () => {
+  describe('tours API', () => {
+    it('getting all tours', async () => {
       const response= await request(app)
       .get('/api/v1/tours');
      assert.equal(response.status, 200);
     });
+    it('should add a tour', async()=>{
+      const name='first tour';
+      const price=200
+      const res =await request(app)
+      .post('/api/v1/tours')
+      .send({name,price})
+      assert.equal(res.status, 401);
+    })
   });
+
 });
