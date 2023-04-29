@@ -17,7 +17,11 @@ describe('tour controller', () => {
       const res =await request(app)
       .post('/api/v1/tours')
       .send({name,price})
+       console.log(res)
       assert.equal(res.status, 401);
+      assert.equal(res.body.status, 'failed');
+      assert.equal(res.body.message,'You are not logged in, Please login first')
+      
     })
   });
 
